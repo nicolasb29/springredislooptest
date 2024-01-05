@@ -1,0 +1,20 @@
+###
+### Redis :
+### - REDIS_MASTER_SET to modify to your own master
+### MQ :
+### - qmanager : mqtuxdocker
+### - channel : DEV.APP.SVRCONN
+### - QUEUES : DEV.QUEUE.1 / DEV.QUEUE.2 / DEV.QUEUE.3
+### - user : app
+### - password : ppa
+###
+version: '3.4'
+services:
+  redis:
+    image: bitnami/redis:7.0
+    ports:
+      - "6379:6379"
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - 'BIND_ADDRESS=0.0.0.0'
+      - 'REDIS_ANNOUNCE_IP=0.0.0.0'
