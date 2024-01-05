@@ -12,7 +12,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
-@EmbeddedKafka(topics = {"topic1", "topic2", "singleTopic1"}) // EmbeddedKafkaContextCustomizer
+@EmbeddedKafka(kraft = false, topics = {"topic1", "topic2", "singleTopic1"}) // EmbeddedKafkaContextCustomizer
 class KafkaApplicationTests  {
 
 	@Autowired
