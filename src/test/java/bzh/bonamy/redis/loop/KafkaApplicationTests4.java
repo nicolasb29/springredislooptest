@@ -1,26 +1,32 @@
 package bzh.bonamy.redis.loop;
 
-import bzh.bonamy.redis.loop.RedisMessagePublisher;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.kafka.test.context.EmbeddedKafka;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.testcontainers.containers.GenericContainer;
 
 import java.util.Map;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 @SpringBootTest
-class KafkaApplicationTests extends AbstractKafka {
+class KafkaApplicationTests4 extends AbstractKafka {
 
 	@Autowired
 	private RedisMessagePublisher redisMessagePublisher;
+
+	@TestConfiguration
+	static class Config {
+		@Bean
+		public String bean() {
+			return "KafkaApplicationTest4";
+		}
+	}
 
 	@Test
 	void a() {
@@ -43,13 +49,21 @@ class KafkaApplicationTests extends AbstractKafka {
 
 
 	@Test
-	void redis() throws InterruptedException {
+	void redis4() throws InterruptedException {
 		String message = "Message " + UUID.randomUUID();
 		redisMessagePublisher.publish(message);
 		Thread.sleep(1000);
+		simulateRedisCrash();
 	}
 
-
+	private void simulateRedisCrash() throws InterruptedException {
+		System.out.println("""
+    		################################################################
+    		SIGKILL redis now
+    		################################################################
+				""");
+		Thread.sleep(10000);
+	}
 
 
 }

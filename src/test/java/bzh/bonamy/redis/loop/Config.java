@@ -17,9 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Service
 public class Config {
     @Bean
-    JedisConnectionFactory jedisConnectionFactory(GenericContainer<?> redisContainer) {
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration(redisContainer.getHost(), redisContainer.getFirstMappedPort());
-        return new JedisConnectionFactory(redisStandaloneConfiguration);
+    JedisConnectionFactory jedisConnectionFactory() {
+       return new JedisConnectionFactory();
     }
 
     @Bean
@@ -56,16 +55,6 @@ public class Config {
         return container;
     }
 
-    @Bean
-    GenericContainer<?> redisContainer() {
-        GenericContainer<?> redis =
-                new GenericContainer<>(DockerImageName.parse("redis:latest")).withExposedPorts(6379);
-        redis.start();
-        System.setProperty("spring.data.redis.host", redis.getHost());
-        System.setProperty("spring.data.redis.port", redis.getMappedPort(6379).toString());
 
-        System.out.println("Redis started");
-        return redis;
-    }
 
 }
